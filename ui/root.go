@@ -1,8 +1,11 @@
 package ui
 
 import (
+	"database/sql"
+
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
+	_ "github.com/lib/pq"
 	"github.com/pkg/errors"
 	"github.com/samox73/just-in-time/ui/components"
 	"github.com/samox73/just-in-time/ui/scenes"
@@ -11,19 +14,30 @@ import (
 type rootModel struct {
 	headerComponent tea.Model
 	currentSize     tea.WindowSizeMsg
+	db              *sql.DB
 }
 
 func newModel() *rootModel {
+	connStr := "postgres://postgres:test@localhost/jit?sslmode=disable"
+	db, err := sql.Open("postgres", connStr)
+	if err != nil {
+		panic(err)
+	}
 	m := &rootModel{
 		currentSize: tea.WindowSizeMsg{
 			Width:  20,
 			Height: 14,
 		},
+		db: db,
 	}
 
 	m.headerComponent = components.NewHeaderComponent(m)
 
 	return m
+}
+
+func (m *rootModel) GetDBConnector() *sql.DB {
+	return m.db
 }
 
 func (m *rootModel) Size() tea.WindowSizeMsg {

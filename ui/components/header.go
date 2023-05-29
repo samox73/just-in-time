@@ -4,8 +4,8 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
 
-	"github.com/samox73/just-in-time/ui/styles"
 	"github.com/samox73/just-in-time/ui/models"
+	"github.com/samox73/just-in-time/ui/styles"
 )
 
 var _ tea.Model = (*headerComponent)(nil)
@@ -31,11 +31,7 @@ func (h headerComponent) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 }
 
 func (h headerComponent) View() string {
-	out := h.labelStyle.Render("Installation: ")
-	out += "None"
-	out += "\n"
-
-	out += h.labelStyle.Render("Profile: ")
+	out := h.labelStyle.Render("User: ")
 	out += "None"
 
 	return lipgloss.NewStyle().Margin(1, 0).Render(out)

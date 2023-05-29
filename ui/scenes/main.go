@@ -8,9 +8,9 @@ import (
 	"github.com/charmbracelet/lipgloss"
 	"github.com/spf13/viper"
 
-	"github.com/samox73/just-in-time/ui/styles"
 	"github.com/samox73/just-in-time/ui/components"
 	"github.com/samox73/just-in-time/ui/models"
+	"github.com/samox73/just-in-time/ui/styles"
 )
 
 var _ tea.Model = (*mainMenu)(nil)
@@ -106,11 +106,6 @@ func (m mainMenu) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				}
 			}
 			return m, nil
-		case tea.KeyRunes:
-			switch string(msg.Runes) {
-			case "q":
-				return m, tea.Quit
-			}
 		default:
 			var cmd tea.Cmd
 			m.list, cmd = m.list.Update(msg)
